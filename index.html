@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Manager</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+
+  </head>
+  <body ng-app='projectManager' ng-controller='ProjectManagerController'>
+      
+  <nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class='navbar-brand glyphicon glyphicon-tasks'></span>
+          <a class="navbar-brand" href="#">Project Manager</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Projects</a></li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="search">
+            </div>
+          </form>
+          <ul class="nav navbar-nav">
+            <li>
+              <a type="button" ng-click="showAddEditForm(nil)"><span class="glyphicon glyphicon-plus"></span> Add Projects</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{active:enableGrid}">
+              <a type="button" ng-click='enableGridAction();' ><span class="glyphicon glyphicon-th"></span></a>
+            </li>
+            <li ng-class="{active:!enableGrid}">
+              <a type="button" ng-click='disableGridAction();'><span class="glyphicon glyphicon-th-list"></span></a>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container" ng-show='enableGrid'>
+      <div class="panel panel-primary" style="width: 33%; height: 200px; float: left; border: 10px solid white;" ng-repeat="project in projects | filter:search track by $index">
+        <div class="panel-heading">
+          <span class="grid-title">{{project.projectName}}</span>
+          <div style='float: right;'>
+            <span class="glyphicon glyphicon-edit edit-button" ng-click="showAddEditForm($index)"></span>
+            <span class="glyphicon glyphicon-remove remove-button" ng-click="removeProject($index);"></span>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            <span class="title-project">Preoject name:</span>
+            <span class="value-project">{{project.projectName}}</span>
+          </p>
+          <p>
+            <span class="title-project">Start Date: </span>
+            <span>{{project.startDate}}</span>
+          </p>
+          <p>
+            <span class="title-project">End Date: </span>
+            <span>{{project.endDate}}</span>
+          </p>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="container" ng-hide='enableGrid'>
+      <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="container" ng-show="showAddEditProjectForm">
+      <form>
+        <div class="form-group">
+          <label for="InputProjectName">Project name</label>
+          <input ng-model="prName" type="text" class="form-control" id="InputProjectName" placeholder="Project name">
+        </div>
+        <div class="form-group">
+          <label for="startDate">Start date</label>
+          <input ng-model="strDate" type="date" class="form-control" id="startDate">
+        </div>
+        <div class="form-group">
+          <label for="endDate">End date</label>
+          <input ng-model="eDate" type="date" class="form-control" id="endDate">
+        </div>
+        <button type="button" class="btn btn-default" ng-click="addProject({projectName:prName, startDate: strDate, endDate: eDate});">Add project</button>
+      </form>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    
+   <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
